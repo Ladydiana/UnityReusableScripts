@@ -1,23 +1,33 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections;
+
+/* Description: Spawns a given prefab.
+ * Run Type: continuous
+ * Time: Random time ranging from minSecondsBetweenSpawning to maxSecondsBetweenSpawning
+ * Location: Random location between (x +- deltaX, y+- deltaY, z +- deltaZ )
+ */
 
 public class SpawnGameObjects : MonoBehaviour {
 
 	public GameObject spawnPrefab;
+    public GameManager gameManager;
 
 	public float minSecondsBetweenSpawning = 3.0f;
 	public float maxSecondsBetweenSpawning = 6.0f;
-	
-	//public Transform chaseTarget;
+
+	public float deltaX = 0;
+	public float deltaY = 0;
+	public float deltaZ = 0;
 	
 	private float savedTime;
 	private float secondsBetweenSpawning;
 
 	// Use this for initialization
 	void Start () {
-		savedTime = Time.time;
-		secondsBetweenSpawning = Random.Range (minSecondsBetweenSpawning, maxSecondsBetweenSpawning);
-	}
+		savedTime = 0;
+        secondsBetweenSpawning = 0;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -31,19 +41,15 @@ public class SpawnGameObjects : MonoBehaviour {
 
 	void MakeThingToSpawn()
 	{
-		// create spawn position
-		Vector3 spawnPos = new Vector3(Random.Range(transform.position.x-100, transform.position.x +100), 
-					transform.position.y, 
-					Random.Range(transform.position.z-100, transform.position.z +100)
-					);
-		// create a new gameObject
-		GameObject clone = Instantiate(spawnPrefab, spawnPos, transform.rotation) as GameObject;
-		//GameObject clone = Instantiate(spawnPrefab, transform.position, transform.rotation) as GameObject;
+        if (gameManager.gameStarted){
+            // create spawn position
+            Vector3 spawnPos = new Vector3(	Random.Range(transform.position.x - deltaX, transform.position.x + deltaX),
+											Random.Range(transform.position.x - deltaY, transform.position.x + deltaY),
+                        					Random.Range(transform.position.z - deltaZ, transform.position.z + deltaZ)
+                        				  );
+            // create a new gameObject
+            GameObject clone = Instantiate(spawnPrefab, spawnPos, transform.rotation) as GameObject;
+        }
 
-		// set chaseTarget if specified
-		/*if ((chaseTarget != null) && (clone.gameObject.GetComponent<Chaser> () != null))
-		{
-			clone.gameObject.GetComponent<Chaser>().SetTarget(chaseTarget);
-		}*/
-	}
+    }
 }
