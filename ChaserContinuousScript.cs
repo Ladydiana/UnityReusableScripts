@@ -20,6 +20,9 @@ public class ChaserContinuousScript : MonoBehaviour {
 			if (GameObject.FindWithTag ("Player")!=null) {
 				target = GameObject.FindWithTag ("Player");
 			}
+			else if (GameObject.FindWithTag ("Main Camera")!=null) {
+				target = GameObject.FindWithTag ("Main Camera");
+			}
 		}
 	}
 	
