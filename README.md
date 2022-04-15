@@ -7,4 +7,4 @@ Shoots a bullet on click by generating a bullet prefab and launching it forward.
 
 Click press time determines speed.
 
-\* with collision detection
+<sub>\* with collision detection</sub>
